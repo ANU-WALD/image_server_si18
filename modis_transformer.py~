@@ -13,7 +13,8 @@ im_size = 800
 res = 4. / im_size
 
 
-src_path = 'HDF4_EOS:EOS_GRID:"/g/data/u39/public/data/modis/lpdaac-tiles-c6/MCD43A4.006/2018.11.29/MCD43A4.A2018333.h29v10.006.2018342030549.hdf":MOD_Grid_BRDF:Nadir_Reflectance_Band1'
+
+src_path = 'HDF4_EOS:EOS_GRID:"/g/data/u39/public/data/modis/lpdaac-tiles-c6/MCD43A4.006/2018.11.29/MCD43A4.A2018333.h29v10.006.2018342032506.hdf":MOD_Grid_BRDF:Nadir_Reflectance_Band1'
 
 
 src = gdal.Open(src_path)
