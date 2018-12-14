@@ -12,18 +12,25 @@ im_size = 800
 
 res = 4. / im_size
 
-src_path = 'NETCDF:"/g/data/rr5/satellite/obs/himawari8/FLDK/Find_a_file":channel_0001_brf' 
+src_path = ['NETCDF:"/g/data/rr5/satellite/obs/himawari8/FLDK/2018/12/12/0600/20181212060000-P1S-ABOM_BRF_B01-PRJ_GEOS141_2000-HIMAWARI8-AHI.nc"',
+'NETCDF:"/g/data/rr5/satellite/obs/himawari8/FLDK/2018/12/12/0600/20181212060000-P1S-ABOM_BRF_B02-PRJ_GEOS141_2000-HIMAWARI8-AHI.nc"',
+'NETCDF:"/g/data/rr5/satellite/obs/himawari8/FLDK/2018/12/12/0600/20181212060000-P1S-ABOM_BRF_B03-PRJ_GEOS141_2000-HIMAWARI8-AHI.nc"']
 
-src = gdal.Open(src_path)
+bands = []
 
-print(src.GetGeoTransform())
-print(src.GetProjection())
+for s in src_path:
+	src = gdal.Open(s)
 
-dst = gdal.GetDriverByName('MEM').Create('', im_size, im_size, 1, gdal.GDT_Float32)
-geot = [min_lon, res, 0., max_lat, 0., -1*res]
-dst.SetGeoTransform(geot)
-dst.SetProjection(wgs84_wkt)
+	print(src.GetGeoTransform())
+	print(src.GetProjection())
+	
+	dst = gdal.GetDriverByName('MEM').Create('', im_size, im_size, 1, gdal.GDT_Float32)
+	geot = [min_lon, res, 0., max_lat, 0., -1*res]
+	dst.SetGeoTransform(geot)
+	dst.SetProjection(wgs84_wkt)
+	
+	gdal.ReprojectImage(src, dst, None, None, gdal.GRA_NearestNeighbour)
+	bands.append(dst)
 
-gdal.ReprojectImage(src, dst, None, None, gdal.GRA_NearestNeighbour)
-
-plt.imsave("Him8.png", dst.ReadAsArray())
+b2 = np.dstack((bands[0].ReadAsArray(), bands[1].ReadAsArray(), bands[2].ReadAsArray()))
+plt.imsave("Him8.png", b2 * 2)
