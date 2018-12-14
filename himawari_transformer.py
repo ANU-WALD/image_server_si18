@@ -12,7 +12,7 @@ im_size = 800
 
 res = 4. / im_size
 
-src_path = 'NETCDF:"/g/data/rr5/satellite/obs/himawari8/FLDK/Find_a_file":channel_0001_brf' 
+src_path = 'NETCDF:"/g/data/rr5/satellite/obs/himawari8/FLDK/2018/12/09/0000/20181209000000-P1S-ABOM_BRF_B01-PRJ_GEOS141_2000-HIMAWARI8-AHI.nc'
 
 src = gdal.Open(src_path)
 
