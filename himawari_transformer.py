@@ -32,5 +32,5 @@ for s in src_path:
 	gdal.ReprojectImage(src, dst, None, None, gdal.GRA_NearestNeighbour)
 	bands.append(dst)
 
-b2 = np.dstack((bands[0].ReadAsArray(), bands[1].ReadAsArray(), bands[2].ReadAsArray()))
+b2 = np.dstack((bands[2].ReadAsArray(), bands[1].ReadAsArray(), bands[0].ReadAsArray()))
 plt.imsave("Him8.png", b2 * 2)
